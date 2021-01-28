@@ -1,3 +1,4 @@
+import 'package:dailyrecipe/screens/home_screen.dart';
 import 'package:dailyrecipe/screens/register_screen.dart';
 import 'package:dailyrecipe/screens/signin_screen.dart';
 import 'package:dailyrecipe/screens/splash_screen.dart';
@@ -36,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SigninScreen(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: HomeScreen(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 

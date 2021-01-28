@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dailyrecipe/components/logo_component.dart';
 import 'package:dailyrecipe/screens/register_screen.dart';
+import 'package:dailyrecipe/screens/signin_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,11 @@ class SplashScreen extends StatelessWidget {
 
     Navigator.of(context).push(CupertinoPageRoute(builder: (context) => RegisterScreen(),));
 
-    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterScreen(),));
+    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterScreen(),));
+  }
+
+  void _signInTapped(BuildContext context){
+    Navigator.of(context).push(CupertinoPageRoute(builder: (context) => SigninScreen(),));
   }
 
   @override
@@ -69,7 +74,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 FlatButton(
                   height: 50,
-                  onPressed: () => {},
+                  onPressed: () => _signInTapped(context),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   child: Center(

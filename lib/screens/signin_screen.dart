@@ -1,4 +1,5 @@
 import 'package:dailyrecipe/components/logo_component.dart';
+import 'package:dailyrecipe/screens/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,10 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+
+    void _registerTapped(BuildContext context) {
+      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterScreen()));
+    }
 
     return Scaffold(
       body: Stack(
@@ -107,7 +112,6 @@ class _SigninScreenState extends State<SigninScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
-                              print("abc");
                               setState(() {
                                 _isHidePassword = !_isHidePassword;
                               });
@@ -120,17 +124,6 @@ class _SigninScreenState extends State<SigninScreen> {
                               color: Colors.blueAccent,
                             ),
                           ),
-
-                          // Padding(
-                          //   padding: EdgeInsets.all(15),
-                          //   child: FlatButton(
-                          //     onPressed: ()=> {},
-                          //     child: Image.asset(
-                          //       "assets/images/ic_showpass.png",
-                          //       fit: BoxFit.fill,
-                          //     ),
-                          //   ),
-                          // ),
                         ),
                       ),
                       SizedBox(
@@ -168,7 +161,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             color: Color(0xffF55A00),
                           ),
                           recognizer:  TapGestureRecognizer()
-                            ..onTap = () => print('Tap Here onTap'),
+                            ..onTap = () =>_registerTapped(context),
                         ),
                       ],
                     ),

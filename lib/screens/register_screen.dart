@@ -1,4 +1,5 @@
 import 'package:dailyrecipe/components/logo_component.dart';
+import 'package:dailyrecipe/screens/signin_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,11 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   var _isHidePassword = true;
+
+
+  void _signInTapped(BuildContext context){
+    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => SigninScreen(),));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: Color(0xffF55A00),
                           ),
                           recognizer:  TapGestureRecognizer()
-                            ..onTap = () => print('Tap Here onTap'),
+                            ..onTap = () => _signInTapped(context),
                         ),
                       ],
                     ),
