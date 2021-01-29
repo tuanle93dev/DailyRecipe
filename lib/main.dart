@@ -2,6 +2,7 @@ import 'package:dailyrecipe/screens/home_screen.dart';
 import 'package:dailyrecipe/screens/register_screen.dart';
 import 'package:dailyrecipe/screens/signin_screen.dart';
 import 'package:dailyrecipe/screens/splash_screen.dart';
+import 'package:dailyrecipe/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: AppColors.colorActive
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
