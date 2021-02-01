@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => SigninScreen(),));
   }
 
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
@@ -171,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 50,
                       ),
                       FlatButton(
-                        onPressed: () => {},
+                        onPressed: () => _signInTapped(context),
                         height: 50,
                         color: Color(0xffF55A00),
                         shape: RoundedRectangleBorder(

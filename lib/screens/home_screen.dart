@@ -3,9 +3,10 @@ import 'package:dailyrecipe/objects/recipes_obj.dart';
 import 'package:dailyrecipe/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rating_bar/rating_bar.dart';
+
+import 'custom_filter_bottomsheet.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,92 +14,57 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-  final List<MenuObject> _listMenu = [
-    MenuObject(
-      menuName: "Home",
-      assetName: "assets/svgs/ic_home_active.svg",
-    ),
-    MenuObject(
-      menuName: "Favorites",
-      assetName: "assets/svgs/ic_like.svg",
-    ),
-    MenuObject(
-      menuName: "Recently Viewed",
-      assetName: "assets/svgs/ic_play.svg",
-    ),
-    MenuObject(
-      menuName: "Settings",
-      assetName: "assets/svgs/ic_setting.svg",
-    ),
-    MenuObject(
-      menuName: "About Us",
-      assetName: "assets/svgs/ic_info.svg",
-    ),
-    MenuObject(
-      menuName: "Help",
-      assetName: "assets/svgs/ic_help.svg",
-    ),
-    MenuObject(
-      menuName: "Sign Out",
-      assetName: "assets/svgs/ic_logout.svg",
-    )
-  ];
 
   final List<RecipesObj> _listToDay = [
-    RecipesObj(isLike:false, type:"Breakfast", name:"French Toast with Berries", star:4, calor:120, minus:10, servies:1),
-    RecipesObj(isLike:false, type:"Breakfast", name:"Brown Sugar Cinnamon Toast", star:3, calor:200, minus:10, servies:1),
-    RecipesObj(isLike:false, type:"Breakfast", name:"French Toast with Berries", star:1, calor:120, minus:10, servies:1),
-    RecipesObj(isLike:false, type:"Breakfast", name:"Brown Sugar Cinnamon Toast", star:3.5, calor:160, minus:10, servies:1),
+    RecipesObj(
+        isLike: false,
+        type: "Breakfast",
+        name: "French Toast with Berries",
+        star: 4,
+        calor: 120,
+        minus: 10,
+        servies: 1),
+    RecipesObj(
+        isLike: false,
+        type: "Breakfast",
+        name: "Brown Sugar Cinnamon Toast",
+        star: 3,
+        calor: 200,
+        minus: 10,
+        servies: 1),
+    RecipesObj(
+        isLike: false,
+        type: "Breakfast",
+        name: "French Toast with Berries",
+        star: 1,
+        calor: 120,
+        minus: 10,
+        servies: 1),
+    RecipesObj(
+        isLike: false,
+        type: "Breakfast",
+        name: "Brown Sugar Cinnamon Toast",
+        star: 3.5,
+        calor: 160,
+        minus: 10,
+        servies: 1),
   ];
 
-  int _currentMenuIndex = 0;
+  void _filterTapped(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return CustomFilterBottomSheet();
+        },
+      isScrollControlled: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      endDrawerEnableOpenDragGesture: false,
       backgroundColor: Color(0xff010101),
-      appBar: AppBar(
-        brightness: Brightness.dark,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Image.asset("assets/images/ic_menu.png"),
-          color: Colors.white,
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Image.asset("assets/images/ic_notification.png"),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        child: Drawer(
-          child: Container(
-            color: Color(0xff2D2D2D),
-            child: Column(
-              children: [
-                _buildHeaderDrawer(),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    width: double.infinity,
-                    child: _buildListMenu(_listMenu),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Column(
@@ -133,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Container(
@@ -158,60 +124,53 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF2B2B2B),
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                FlatButton(
                   child: SvgPicture.asset("assets/svgs/ic_fillter.svg"),
+                  onPressed: () => {_filterTapped(context)},
+                  color: Color(0xFF2B2B2B),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  height: 40,
+                  minWidth: 40,
+                  splashColor: Colors.grey,
+                  padding: EdgeInsets.all(10),
                 ),
               ],
             ),
             SizedBox(
               height: 30,
             ),
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child:Column(
-                children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Today's Fresh Recipes",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              "See all",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.colorActive,
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                       Container(
-                         height: 220,
-                         child: _buildListToday(_listToDay),
-                        // child: _buildRowToDay(RecipesObj()),
-                       ),
-                      ],
+            Expanded(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    _buildTodayHeader(),
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Container(),
-                ],
+                    Container(
+                      height: 220,
+                      child: _buildListToday(_listToDay),
+                      // child: _buildRowToDay(RecipesObj()),
+                    ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Container(
+                      height: 1,
+                      color: Color(0xFF707070),
+                    ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    _buildRecommendedHeader(),
+                    Container(
+                      child: _buildListRecommended(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -220,134 +179,51 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeaderDrawer() {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        width: double.infinity,
-        child: Wrap(
-          children: [
-            Row(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 90,
-                  height: 90,
-                  child: Center(
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          ExactAssetImage("assets/images/ic_avatar.png"),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        child: Text(
-                          "Emma Holmes",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        child: Text(
-                          "View Profile",
-                          style: TextStyle(
-                            color: Color(0xff7B7B7B),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRowMenu(
-      MenuObject menuObject, bool isActive, VoidCallback callback) {
-    return Column(
+  Widget _buildTodayHeader() {
+    return Row(
       children: [
-        FlatButton(
-          padding: EdgeInsets.zero,
-          onPressed: callback,
-          child: Row(
-            children: [
-              Container(
-                height: 17,
-                width: 3,
-                color: isActive ? AppColors.colorActive : Colors.transparent,
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                padding: EdgeInsets.all(5),
-                height: 30,
-                width: 30,
-                child: SvgPicture.asset(
-                  menuObject.assetName,
-                  color: isActive
-                      ? AppColors.colorActive
-                      : AppColors.colorUnActive,
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                menuObject.menuName,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: isActive
-                      ? AppColors.colorActive
-                      : AppColors.colorUnActive,
-                ),
-              )
-            ],
+        Expanded(
+          child: Text(
+            "Today's Fresh Recipes",
+            style: TextStyle(
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(
-          height: 20,
+        Text(
+          "See all",
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.colorActive,
+          ),
         )
       ],
     );
   }
 
-  Widget _buildListMenu(List<MenuObject> list) {
-    return ListView.builder(
-        // scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        itemCount: list == null ? 0 : list.length,
-        itemBuilder: (BuildContext context, int index) {
-          var obj = list[index];
-          return _buildRowMenu(obj, index == _currentMenuIndex, () {
-            setState(() {
-              _currentMenuIndex = index;
-            });
-          });
-        });
+  Widget _buildRecommendedHeader() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            "Recommended",
+            style: TextStyle(
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Text(
+          "See all",
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.colorActive,
+          ),
+        )
+      ],
+    );
   }
 
+
   Widget _buildRowToDay(RecipesObj obj) {
-    return  Container(
+    return Container(
       width: 170,
       height: 210,
       child: Stack(
@@ -373,8 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: EdgeInsets.only(top: 15, left: 30),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(
-                        "assets/images/img_item_today.png"))),
+                    image: AssetImage("assets/images/img_item_today.png"))),
           ),
           Container(
             width: 144,
@@ -387,8 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   child: Text(
                     "Breakfast",
-                    style: TextStyle(
-                        fontSize: 8, color: Color(0xFF128FAE)),
+                    style: TextStyle(fontSize: 8, color: Color(0xFF128FAE)),
                   ),
                 ),
                 SizedBox(
@@ -398,8 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   child: Text(
                     "French Toast with Berries",
-                    style:
-                    TextStyle(fontSize: 14, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: Colors.white),
                   ),
                 ),
                 SizedBox(
@@ -421,8 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(
                   "120 Calories",
-                  style: TextStyle(
-                      fontSize: 8, color: AppColors.colorActive),
+                  style: TextStyle(fontSize: 8, color: AppColors.colorActive),
                 ),
                 SizedBox(
                   height: 7,
@@ -436,8 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             width: 9,
                             height: 9,
-                            child: SvgPicture.asset(
-                                "assets/svgs/ic_time.svg"),
+                            child: SvgPicture.asset("assets/svgs/ic_time.svg"),
                           ),
                           SizedBox(
                             width: 10,
@@ -446,8 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               "10 mins",
                               style: TextStyle(
-                                  fontSize: 8,
-                                  color: Color(0xFF7B7B7B)),
+                                  fontSize: 8, color: Color(0xFF7B7B7B)),
                             ),
                           )
                         ],
@@ -460,8 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             width: 9,
                             height: 9,
-                            child: SvgPicture.asset(
-                                "assets/svgs/ic_bell.svg"),
+                            child: SvgPicture.asset("assets/svgs/ic_bell.svg"),
                           ),
                           SizedBox(
                             width: 10,
@@ -470,8 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               "1 Serving",
                               style: TextStyle(
-                                  fontSize: 8,
-                                  color: Color(0xFF7B7B7B)),
+                                  fontSize: 8, color: Color(0xFF7B7B7B)),
                             ),
                           )
                         ],
@@ -488,13 +356,172 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildListToday(List<RecipesObj> list) {
-    return ListView.builder(
+    return ListView.separated(
         scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            width: 5,
+          );
+        },
         physics: BouncingScrollPhysics(),
         itemCount: list == null ? 0 : list.length,
         itemBuilder: (context, index) {
           var obj = list[index];
           return _buildRowToDay(obj);
-    });
+        });
+  }
+
+  Widget _buildRowRecommended() {
+    return Wrap(children: [
+      Column(
+        children: [
+          SizedBox(
+            height: 18,
+          ),
+          Container(
+            height: 89,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+              color: Color(0xFF2B2B2B),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    height: 45,
+                    width: 75,
+                    margin: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "assets/images/img_item_today.png"))),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Breakfast",
+                          style:
+                              TextStyle(fontSize: 8, color: Color(0xFF128FAE)),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Text(
+                          "Blueberry Muffins",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Container(
+                          width: 50,
+                          child: RatingBar.readOnly(
+                            initialRating: 3,
+                            isHalfAllowed: true,
+                            halfFilledIcon: Icons.star_half,
+                            filledIcon: Icons.star,
+                            emptyIcon: Icons.star_border,
+                            size: 10,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Text(
+                          "120 Calories",
+                          style: TextStyle(
+                              fontSize: 8, color: AppColors.colorActive),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Row(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 9,
+                                  height: 9,
+                                  child: SvgPicture.asset(
+                                      "assets/svgs/ic_time.svg"),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  child: Text(
+                                    "10 mins",
+                                    style: TextStyle(
+                                        fontSize: 8, color: Color(0xFF7B7B7B)),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 9,
+                                  height: 9,
+                                  child: SvgPicture.asset(
+                                      "assets/svgs/ic_bell.svg"),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  child: Text(
+                                    "1 Serving",
+                                    style: TextStyle(
+                                        fontSize: 8, color: Color(0xFF7B7B7B)),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  height: 14,
+                  width: 50,
+                  child: SvgPicture.asset("assets/svgs/ic_like.svg"),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ]);
+  }
+
+  Widget _buildListRecommended() {
+    return ListView.separated(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            width: 5,
+          );
+        },
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return _buildRowRecommended();
+        });
   }
 }

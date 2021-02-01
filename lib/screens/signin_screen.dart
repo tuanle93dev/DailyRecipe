@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'dashboard_screen.dart';
+
 class SigninScreen extends StatefulWidget {
   @override
   _SigninScreenState createState() => _SigninScreenState();
@@ -14,10 +16,18 @@ class _SigninScreenState extends State<SigninScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    var _size = MediaQuery
+        .of(context)
+        .size;
 
     void _registerTapped(BuildContext context) {
-      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterScreen()));
+      Navigator.of(context).pushReplacement(
+          CupertinoPageRoute(builder: (context) => RegisterScreen()));
+    }
+
+    void _logginTapped(BuildContext context) {
+      Navigator.of(context).pushReplacement(
+          CupertinoPageRoute(builder: (context) => DashBoardScreen()));
     }
 
     return Scaffold(
@@ -130,7 +140,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         height: 50,
                       ),
                       FlatButton(
-                        onPressed: () => {},
+                        onPressed: () => _logginTapped(context),
                         height: 50,
                         color: Color(0xffF55A00),
                         shape: RoundedRectangleBorder(
@@ -160,8 +170,8 @@ class _SigninScreenState extends State<SigninScreen> {
                             fontSize: 12,
                             color: Color(0xffF55A00),
                           ),
-                          recognizer:  TapGestureRecognizer()
-                            ..onTap = () =>_registerTapped(context),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => _registerTapped(context),
                         ),
                       ],
                     ),
